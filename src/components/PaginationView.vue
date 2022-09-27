@@ -1,5 +1,9 @@
 <template>
-  <nav aria-label="Page navigation example" style="margin-top: 10px">
+  <nav
+    aria-label="Page navigation example"
+    style="margin-top: 10px"
+    class="d-flex justify-content-center"
+  >
     <ul class="pagination">
       <!-- 현재 1페이지라면 보여지지 않는다. 이전버튼은  -->
       <li class="page-item" v-if="page !== 1">
