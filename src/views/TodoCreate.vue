@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <h2>Todo 수정</h2>
-    <TodoForm :editing="true" />
+    <h1>TodoCeate</h1>
+    <TodoForm />
   </div>
 </template>
 
@@ -9,6 +9,9 @@
 import TodoForm from "@/components/TodoForm.vue";
 export default {
   components: { TodoForm },
+  setup() {
+    return {};
+  },
 };
 </script>
 

@@ -32,6 +32,21 @@
               >
             </li>
             <li class="nav-item">
+              <RouterLink class="nav-link" :to="{ name: 'Create' }"
+                >TodoCreate</RouterLink
+              >
+            </li>
+            <li class="nav-item">
+              <RouterLink class="nav-link" :to="{ name: 'About' }"
+                >About</RouterLink
+              >
+            </li>
+            <li class="nav-item">
+              <RouterLink class="nav-link" :to="{ name: 'Profile' }"
+                >Profile</RouterLink
+              >
+            </li>
+            <li class="nav-item">
               <a
                 class="nav-link"
                 href="https://github.com/seaho5599/seaho5599.github.io"

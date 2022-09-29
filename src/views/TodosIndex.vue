@@ -1,9 +1,12 @@
 <template>
   <div class="container">
-    <AppTitle :apptitle="apptitle" />
+    <div class="d-flex justify-content-between mb-3 mt-3">
+      <AppTitle :apptitle="apptitle" />
+      <button class="btn btn-primary btn-sm" @click="moveToCreate">
+        Create Todo
+      </button>
+    </div>
 
-    <!-- 할일입력 -->
-    <TodoForm @add-todo="addTodo" style="margin-top: 10px" />
     <!-- 서버에러 출력 -->
     <ErrorBox :errtext="errtext" />
     <div style="color: red">{{ error }}</div>
@@ -32,16 +35,16 @@
 import axios from "axios";
 import { computed, ref, watchEffect, watch } from "vue";
 import AppTitle from "@/components/AppTitle.vue";
-import TodoForm from "@/components/TodoSimpleForm.vue";
 import TodoList from "@/components/TodoList.vue";
 import PaginationView from "@/components/PaginationView.vue";
 import ErrorBox from "@/components/ErrorBox.vue";
 import ToastBox from "@/components/ToastBox.vue";
 import { useToast } from "@/composables/toast.js";
+import { useRouter } from "vue-router";
 export default {
   components: {
     AppTitle,
-    TodoForm,
+
     TodoList,
     PaginationView,
     ErrorBox,
@@ -105,7 +108,6 @@ export default {
         // 총 목록수
         totalCout.value = response.headers["x-total-count"];
         page.value = nowPage;
-        triggerToast("서버 목록 호출에 성공하였습니다.");
       } catch (err) {
         error.value = "서버 목록 호출에 실패했습니다. 잠시 뒤 이용해주세요.";
         triggerToast(
@@ -167,6 +169,12 @@ export default {
 
     // 안내창 관련
     const { showToast, toastMessage, toastType, triggerToast } = useToast();
+    const router = useRouter();
+    const moveToCreate = () => {
+      router.push({
+        name: "Create",
+      });
+    };
     return {
       todos,
       addTodo,
@@ -182,6 +190,7 @@ export default {
       toastMessage,
       showToast,
       toastType,
+      moveToCreate,
     };
   },
 };

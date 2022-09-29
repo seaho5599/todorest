@@ -1,8 +1,5 @@
 <template>
-  <h2
-    class="d-flex justify-content-center text-success fw-bold"
-    style="margin: 50px 0"
-  >
+  <h2 class="text-success fw-bold">
     {{ apptitle }}
   </h2>
 </template>
