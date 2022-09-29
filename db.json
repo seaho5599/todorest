@@ -51,49 +51,9 @@
       "id": 1664158533296
     },
     {
-      "subject": "13",
-      "complete": false,
-      "id": 1664158534864
-    },
-    {
       "subject": "14",
-      "complete": false,
+      "complete": true,
       "id": 1664158536311
-    },
-    {
-      "subject": "17",
-      "complete": false,
-      "id": 1664158538512
-    },
-    {
-      "subject": "18",
-      "complete": false,
-      "id": 1664158539328
-    },
-    {
-      "subject": "19",
-      "complete": false,
-      "id": 1664158539936
-    },
-    {
-      "subject": "20",
-      "complete": true,
-      "id": 1664158540400
-    },
-    {
-      "subject": "안녕하세요1",
-      "complete": true,
-      "id": 1664162445217
-    },
-    {
-      "subject": "1121입니다.",
-      "complete": false,
-      "id": 1664162559384
-    },
-    {
-      "subject": "2",
-      "complete": false,
-      "id": 1664162559600
     }
   ]
 }

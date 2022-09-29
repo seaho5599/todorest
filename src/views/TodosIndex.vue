@@ -25,6 +25,8 @@
     <!-- Pagination -->
     <PaginationView :page="page" :totalpage="totalPage" @get-todo="getTodo" />
   </div>
+  <!-- 안내상자 -->
+  <ToastBox :message="toastMessage" :color="toastType" v-if="showToast" />
 </template>
 <script>
 import axios from "axios";
@@ -34,6 +36,8 @@ import TodoForm from "@/components/TodoSimpleForm.vue";
 import TodoList from "@/components/TodoList.vue";
 import PaginationView from "@/components/PaginationView.vue";
 import ErrorBox from "@/components/ErrorBox.vue";
+import ToastBox from "@/components/ToastBox.vue";
+import { useToast } from "@/composables/toast.js";
 export default {
   components: {
     AppTitle,
@@ -41,6 +45,7 @@ export default {
     TodoList,
     PaginationView,
     ErrorBox,
+    ToastBox,
   },
   setup() {
     const apptitle = ref("");
@@ -100,8 +105,13 @@ export default {
         // 총 목록수
         totalCout.value = response.headers["x-total-count"];
         page.value = nowPage;
+        triggerToast("서버 목록 호출에 성공하였습니다.");
       } catch (err) {
         error.value = "서버 목록 호출에 실패했습니다. 잠시 뒤 이용해주세요.";
+        triggerToast(
+          "서버 목록 호출에 실패했습니다. 잠시 뒤 이용해주세요.",
+          "danger"
+        );
       }
     };
     getTodo();
@@ -116,9 +126,10 @@ export default {
         todos.value.push(todo);
         // 목록 갱신이 되므로 1페이지로 이동
         getTodo(1);
+        triggerToast("서버데이터 저장 되었습니다.");
       } catch (err) {
-        console.log("🚀 ~ err", err);
         error.value = "목록 추가 실패";
+        triggerToast("서버데이터 저장 실패되었습니다.", "danger");
       }
     };
 
@@ -131,8 +142,10 @@ export default {
         todos.value.splice(index, 1);
         // 현재페이지 유지
         getTodo(page.value);
+        triggerToast("삭제되었습니다.");
       } catch (err) {
         error.value = "삭제 요청이 거부되었습니다.";
+        triggerToast("삭제 요청이 거부되었습니다.", "danger");
       }
     };
     const toggleTodo = async (index) => {
@@ -145,10 +158,15 @@ export default {
           complete,
         });
         todos.value[index].complete = complete;
+        triggerToast("업데이트에 성공하였습니다.");
       } catch (err) {
         error.value = "업데이트에 실패하였습니다.";
+        triggerToast("업데이트에 실패하였습니다.", "danger");
       }
     };
+
+    // 안내창 관련
+    const { showToast, toastMessage, toastType, triggerToast } = useToast();
     return {
       todos,
       addTodo,
@@ -161,6 +179,9 @@ export default {
       totalPage,
       page,
       apptitle,
+      toastMessage,
+      showToast,
+      toastType,
     };
   },
 };
