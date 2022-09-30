@@ -14,41 +14,76 @@
             @click="moveToPage(item.id)"
             class="form-check-label"
             v-bind:class="{ todostyle: item.complete }"
+            style="cursor: pointer"
             >{{ item.subject }}
           </label>
         </div>
         <div>
-          <button class="btn btn-danger btn-sm" @click="deleteTodo(index)">
+          <button class="btn btn-danger btn-sm" @click="openModal(item.id)">
             Delete
           </button>
         </div>
       </div>
     </div>
+    <teleport to="#modal">
+      <ModalWin v-if="showModal" @close-modal="closeModal" @delete="onDelete">
+        <template v-slot:title> 할일삭제 </template>
+        <template v-slot:body> 삭제하시겠습니까? </template>
+      </ModalWin>
+    </teleport>
   </div>
 </template>
-
 <script>
+import { ref } from "vue";
 import { useRouter } from "vue-router";
+import ModalWin from "@/components/ModalWin.vue";
 export default {
+  components: {
+    ModalWin,
+  },
   props: ["todos"],
   emits: ["delete-todo", "toggle-todo"],
   setup(props, { emit }) {
     const deleteTodo = (index) => {
+      console.log(index);
       emit("delete-todo", index);
     };
     const toggleTodo = (index) => {
       emit("toggle-todo", index);
     };
-
     const router = useRouter();
     const moveToPage = (id) => {
-      // route를 이용해서 id를 전송해준다.
-      router.push({ name: "Todo", params: { id } });
+      // router 를 이용해서 id 를 전송해준다.
+      // router.push(`/todos/${id}`);
+      router.push({
+        name: "Todo",
+        params: {
+          id,
+        },
+      });
+    };
+    // 모달 기능
+    const showModal = ref(false);
+    const deleteId = ref(null);
+    const openModal = (id) => {
+      deleteId.value = id;
+      showModal.value = true;
+    };
+    const closeModal = () => {
+      showModal.value = false;
+    };
+    const onDelete = () => {
+      deleteTodo(deleteId.value);
+      showModal.value = false;
     };
     return {
       deleteTodo,
       toggleTodo,
       moveToPage,
+      showModal,
+      openModal,
+      closeModal,
+      onDelete,
     };
   },
 };

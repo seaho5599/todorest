@@ -36,17 +36,6 @@
       "id": 1664158531048
     },
     {
-      "subject": "11",
-      "complete": false,
-      "id": 1664158533296
-    },
-    {
-      "subject": "09.29일 수정",
-      "complete": false,
-      "body": "신규제작",
-      "id": 1664158536311
-    },
-    {
       "subject": "정형외과 방문",
       "complete": true,
       "body": "2022.09.29 2시에 방문\n1시20분 점심식사",
@@ -60,13 +49,13 @@
     },
     {
       "subject": "새로운 제목입니다 수정하였습니다.",
-      "complete": false,
+      "complete": true,
       "body": "내용을 등록하였습니다.\nㅁㅁㅁ",
       "id": 1664158536314
     },
     {
       "subject": "새글",
-      "complete": false,
+      "complete": true,
       "body": "울라불라",
       "id": 1664158536315
     }

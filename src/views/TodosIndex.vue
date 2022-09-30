@@ -118,11 +118,8 @@ export default {
     const error = ref("");
     const deleteTodo = async (index) => {
       try {
-        // 현재 index는 배열 인덱스 번호 0,1,2,3,4가 전송된다.
-        // 실제 저장되어 있는 id를 파악한다.
-        const id = todos.value[index].id;
+        const id = index;
         await axios.delete("http://localhost:3000/todos/" + id);
-        todos.value.splice(index, 1);
         // 현재페이지 유지
         getTodo(page.value);
         emit("delete-todo-toast", {});
