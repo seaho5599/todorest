@@ -26,20 +26,21 @@
       </div>
     </div>
     <teleport to="#modal">
-      <ModalWin v-if="showModal" @close-modal="closeModal" @delete="onDelete">
-        <template v-slot:title> 할일삭제 </template>
-        <template v-slot:body> 삭제하시겠습니까? </template>
-      </ModalWin>
+      <DeleteModal
+        v-if="showModal"
+        @close-modal="closeModal"
+        @delete="onDelete"
+      />
     </teleport>
   </div>
 </template>
 <script>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import ModalWin from "@/components/ModalWin.vue";
+import DeleteModal from "@/components/DeleteModal.vue";
 export default {
   components: {
-    ModalWin,
+    DeleteModal,
   },
   props: ["todos"],
   emits: ["delete-todo", "toggle-todo"],

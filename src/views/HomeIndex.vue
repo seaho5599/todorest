@@ -60,8 +60,8 @@ export default {
 
 <style scoped>
 .clock-wrap {
-  width: 26.04vw;
-  min-height: 26.04vw;
+  width: 500px;
+  min-height: 500px;
   background-color: #235440;
 }
 .clock {
