@@ -32,25 +32,25 @@
     },
     {
       "subject": "정형외과 방문",
-      "complete": true,
+      "complete": false,
       "body": "2022.09.29 2시에 방문\n1시20분 점심식사 \n홍",
       "id": 1664158536312
     },
     {
       "subject": "입력",
-      "complete": true,
+      "complete": false,
       "body": "",
       "id": 1664158536313
     },
     {
       "subject": "새로운 제목입니다 수정하였습니다.",
-      "complete": true,
+      "complete": false,
       "body": "내용을 등록하였습니다.\nㅁㅁㅁ",
       "id": 1664158536314
     },
     {
       "subject": "새글",
-      "complete": true,
+      "complete": false,
       "body": "울라불라",
       "id": 1664158536315
     },
@@ -59,6 +59,12 @@
       "complete": false,
       "body": "전달됬나요?\n",
       "id": 1664158536316
+    },
+    {
+      "subject": "테스트",
+      "complete": false,
+      "body": "테스트 baseURL 테스트",
+      "id": 1664158536317
     }
   ]
 }
