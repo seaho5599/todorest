@@ -3,14 +3,21 @@
     <div v-if="loading">Lading ...</div>
     <form v-else @submit.prevent="onSave">
       <div class="row">
+        <!-- 제목 입력 및 수정 영역 -->
         <div class="col-6">
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label>Todo Subject</label>
             <input type="text" class="form-control" v-model="todo.subject" />
             <div v-if="subjectError" style="color: red">{{ subjectError }}</div>
-          </div>
+          </div> -->
+          <InputView
+            label="제목"
+            :err="subjectError"
+            v-model:subject="todo.subject"
+            @update-subject="updateSubject"
+          />
         </div>
-        <!-- 내용 수정 -->
+        <!-- 내용 입력 및 수정 -->
         <div v-if="editing" class="col-6">
           <div class="form-group">
             <label>Status</label>
@@ -55,8 +62,12 @@ import { useRoute, useRouter } from "vue-router";
 import { computed, ref } from "vue";
 import axios from "axios";
 import _ from "lodash";
+import InputView from "@/components/InputView.vue";
 
 export default {
+  components: {
+    InputView,
+  },
   props: {
     editing: {
       type: Boolean,
@@ -155,7 +166,9 @@ export default {
     const todoState = computed(() => {
       return _.isEqual(todo.value, originalTodo.value);
     });
-
+    const updateSubject = (value) => {
+      todo.value.subject = value;
+    };
     return {
       todo,
       loading,
@@ -164,6 +177,7 @@ export default {
       onSave,
       todoState,
       subjectError,
+      updateSubject,
     };
   },
 };
