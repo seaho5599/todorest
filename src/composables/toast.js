@@ -1,29 +1,21 @@
-import { ref, onUnmounted } from "vue";
+import { computed } from "vue";
+import { useStore } from "vuex";
 export const useToast = () => {
+  // vuex 접근 관리
+  const store = useStore();
+
   // 안내상자 보이거나 숨기는 변수
-  const showToast = ref(false);
+  const showToast = computed(() => store.state.modules.showToast);
   // 안내상자에 보여질 내용
-  const toastMessage = ref("");
+  const toastMessage = computed(() => store.state.modules.toastMessage);
   // 안내상자 타입종류
-  const toastType = ref("");
+  const toastType = computed(() => store.state.modules.toastType);
   // 타이머 식별자
-  const toastTimer = ref(null);
+  // const toastTimer = computed(() => store.state.toastTimer);
   // 안내상자 실행 메소드
-  const triggerToast = (message, color = "success") => {
-    toastMessage.value = message;
-    toastType.value = color;
-    showToast.value = true;
-    toastTimer.value = setTimeout(() => {
-      toastMessage.value = "";
-      toastType.value = "";
-      showToast.value = false;
-    }, 3000);
+  const triggerToast = (message, color) => {
+    store.dispatch("modules/triggerToast", { message, color });
   };
-  // 컴포넌트 이동으로 인하여 화면에서 제거 완료시 실행
-  onUnmounted(() => {
-    clearTimeout(toastTimer.value);
-    // console.log("onUnmounted");
-  });
 
   return {
     showToast,
