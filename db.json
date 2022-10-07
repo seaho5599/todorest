@@ -49,28 +49,10 @@
       "id": 1664158536315
     },
     {
-      "subject": "아이템",
+      "subject": "modules",
       "complete": false,
-      "body": "전달됬나요?\n",
+      "body": "toast -> store",
       "id": 1664158536316
-    },
-    {
-      "subject": "테스트1",
-      "complete": false,
-      "body": "테스트 baseURL 테스트",
-      "id": 1664158536317
-    },
-    {
-      "subject": "명령어가 나오지 않습니다.",
-      "complete": false,
-      "body": "해결....요망..",
-      "id": 1664158536318
-    },
-    {
-      "subject": "테스트",
-      "complete": false,
-      "body": "테스트",
-      "id": 1664158536319
     }
   ]
 }

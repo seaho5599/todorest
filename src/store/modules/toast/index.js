@@ -1,36 +1,29 @@
 export default {
   namespaced: true,
   state: {
-    // toastBox 관련
-    showToast: false,
-    toastMessage: "",
-    toastType: "",
+    // toastBox 관련 배열로 저장
+    toasts: [],
   },
   actions: {
     triggerToast({ commit }, { message, color }) {
-      // 메세지 업데이트
-      commit("UPDATE_TOAST_MESSAGE", message);
-      // 색상 업데이트
-      commit("UPDATE_TOAST_TYPE", color);
-      // 상태 업데이트
-      commit("UPDATE_TOAST_STATE", true);
+      //  메세지 및 색상 업데이트
+      commit("ADD_TOAST", { message, color });
       // 타이머 업데이트
       setTimeout(() => {
-        commit("UPDATE_TOAST_MESSAGE", "");
-        commit("UPDATE_TOAST_TYPE", "");
-        commit("UPDATE_TOAST_STATE", false);
+        // 목록 toasts 제일 앞쪽 즉, 배열[0] 삭제
+        commit("REMOVE_TOAST");
       }, 3000);
     },
   },
   mutations: {
-    UPDATE_TOAST_MESSAGE(state, payload) {
-      state.toastMessage = payload;
+    ADD_TOAST(state, payload) {
+      state.toasts.push(payload);
     },
-    UPDATE_TOAST_TYPE(state, payload) {
-      state.toastType = payload;
+    REMOVE_TOAST(state) {
+      state.toasts.shift();
     },
-    UPDATE_TOAST_STATE(state, payload) {
-      state.showToast = payload;
-    },
+    // UPDATE_TOAST_STATE(state, payload) {
+    //   state.showToast = payload;
+    // },
   },
 };

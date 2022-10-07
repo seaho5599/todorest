@@ -3,7 +3,7 @@
     <NavBar />
     <RouterView />
     <Transition name="fade">
-      <ToastBox v-if="showToast" :message="toastMessage" :color="toastType" />
+      <ToastBox />
     </Transition>
   </div>
 </template>
@@ -11,15 +11,13 @@
 <script>
 import ToastBox from "@/components/ToastBox.vue";
 import NavBar from "@/components/NavBar.vue";
-import { useToast } from "@/composables/toast";
 export default {
   components: {
     ToastBox,
     NavBar,
   },
   setup() {
-    const { showToast, toastMessage, toastType } = useToast();
-    return { showToast, toastMessage, toastType };
+    return {};
   },
 };
 </script>
