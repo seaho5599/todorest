@@ -3,7 +3,7 @@ export default {
   state: {
     email: "",
     profile: {},
-    loginState: true,
+    loginState: false,
   },
   actions: {
     LoginKKo({ commit }, { email, profile }) {

@@ -43,22 +43,28 @@ export default {
     const store = useStore();
     const loginState = computed(() => store.getters["kakao/getLoginState"]);
     const gotoTodos = () => {
-      if (!loginState.value) {
-        alert("로그인을 하세요.");
-      } else {
-        router.push({
-          name: "Todos",
-        });
-      }
+      // if (!loginState.value) {
+      //   alert("로그인을 하세요.");
+      // } else {
+      //   router.push({
+      //     name: "Todos",
+      //   });
+      // }
+      router.push({
+        name: "Todos",
+      });
     };
     const gotoTodoCreate = () => {
-      if (!loginState.value) {
-        alert("로그인을 하세요.");
-      } else {
-        router.push({
-          name: "TodoCreate",
-        });
-      }
+      // if (!loginState.value) {
+      //   alert("로그인을 하세요.");
+      // } else {
+      //   router.push({
+      //     name: "TodoCreate",
+      //   });
+      // }
+      router.push({
+        name: "TodoCreate",
+      });
     };
     return {
       loginState,

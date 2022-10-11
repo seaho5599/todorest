@@ -53,6 +53,18 @@
       "complete": false,
       "body": "toast -> store",
       "id": 1664158536316
+    },
+    {
+      "subject": "firebase",
+      "complete": false,
+      "body": "firebase\n",
+      "id": 1664158536318
+    },
+    {
+      "subject": "저장 하고있나요?",
+      "complete": false,
+      "body": "저장?",
+      "id": 1664158536319
     }
   ]
 }
