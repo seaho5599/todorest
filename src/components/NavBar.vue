@@ -1,93 +1,72 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-      <RouterLink class="navbar-brand" :to="{ name: 'Home' }"
-        >My Todo</RouterLink
-      >
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <RouterLink
-              class="nav-link active"
-              aria-current="page"
-              :to="{ name: 'Home' }"
-              >Home</RouterLink
-            >
-          </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" :to="{ name: 'Todos' }"
-              >Todos</RouterLink
-            >
-          </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" :to="{ name: 'Create' }"
-              >TodoCreate</RouterLink
-            >
-          </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" :to="{ name: 'About' }"
-              >About</RouterLink
-            >
-          </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" :to="{ name: 'Profile' }"
-              >Profile</RouterLink
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              href="https://github.com/seaho5599/seaho5599.github.io"
-              target="_black"
-              >Github</a
-            >
-          </li>
-        </ul>
+      <div class="d-flex justify-content-start">
+        <RouterLink class="navbar-brand" :to="{ name: 'Home' }"
+          >My Todo</RouterLink
+        >
+        <!-- <RouterLink class="nav-link" :to="{ name: 'Todos' }">Todos</RouterLink> -->
+        <!-- <RouterLink class="nav-link" :to="{ name: 'TodoCreate' }"
+          >Todo Create</RouterLink
+        > -->
+        <a class="nav-link" @click="gotoTodos" style="cursor: pointer">Todos</a>
+        <a class="nav-link" @click="gotoTodoCreate" style="cursor: pointer"
+          >Todo Create</a
+        >
+        <RouterLink class="nav-link" :to="{ name: 'About' }">About</RouterLink>
+        <RouterLink class="nav-link" :to="{ name: 'Profile' }"
+          >Profile</RouterLink
+        >
+        <a
+          class="nav-link"
+          href="https://github.com/seaho5599/todorest"
+          target="_blank"
+          >Github</a
+        >
       </div>
+      <!-- <div><Kakao /></div> -->
     </div>
-    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <RouterLink class="navbar-brand" :to="{ name: 'Home' }"
-        >My Todo</RouterLink
-      >
-      <RouterLink
-        class="nav-link active"
-        aria-current="page"
-        :to="{ name: 'Home' }"
-        >Home</RouterLink
-      >
-      <RouterLink class="nav-link" :to="{ name: 'Todos' }">Todos</RouterLink>
-      <RouterLink class="nav-link" :to="{ name: 'TodoCreate' }"
-        >Todo Create</RouterLink
-      >
-      <RouterLink class="nav-link" :to="{ name: 'About' }">About</RouterLink>
-      <RouterLink class="nav-link" :to="{ name: 'Profile' }"
-        >Profile</RouterLink
-      >
-      <a
-        class="nav-link"
-        href="https://github.com/tarolong2/todorest"
-        target="_blank"
-        >Github</a
-      >
-    </div>
-  </nav> -->
   </nav>
 </template>
 
 <script>
-export default {};
+// import Kakao from "@/views/KakaoLogin.vue";
+import { computed } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+export default {
+  components: {
+    // Kakao,
+  },
+  setup() {
+    const router = useRouter();
+    const store = useStore();
+    const loginState = computed(() => store.getters["kakao/getLoginState"]);
+    const gotoTodos = () => {
+      if (!loginState.value) {
+        alert("로그인을 하세요.");
+      } else {
+        router.push({
+          name: "Todos",
+        });
+      }
+    };
+    const gotoTodoCreate = () => {
+      if (!loginState.value) {
+        alert("로그인을 하세요.");
+      } else {
+        router.push({
+          name: "TodoCreate",
+        });
+      }
+    };
+    return {
+      loginState,
+      gotoTodos,
+      gotoTodoCreate,
+    };
+  },
+};
 </script>
 
 <style></style>
