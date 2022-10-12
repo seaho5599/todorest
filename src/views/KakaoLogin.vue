@@ -23,6 +23,19 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
+    // 로그인 정보를 저장하는 메소드
+    const cookeSet = (value) => {
+      console.log("로그인 쿠키를 생성");
+      let cookieState = "loginState=" + value;
+      document.cookie = cookieState;
+    };
+    // 로그인 정보를 삭제하는 메소드
+    const cookeDelete = () => {
+      console.log("로그인 쿠키를 삭제");
+      let cookieState = "loginState=logout";
+      document.cookie = cookieState;
+    };
+
     const kakaoLogin = () => {
       window.Kakao.Auth.login({
         scope: "profile_nickname, profile_image, account_email",
@@ -43,6 +56,9 @@ export default {
           alert("로그인 성공!");
           const profile = kakao_account.profile;
           store.dispatch("kakao/loginKKO", { email, profile });
+          // 로그인 성공이라는 내용을 Cookie에 저장한다.
+          cookeSet("success");
+          // console.log(document.cookie);
           router.push({
             name: "Todos",
           });
@@ -58,28 +74,19 @@ export default {
         console.log("Not logged in.");
         return;
       }
-      window.Kakao.API.request({
-        url: "/v1/user/unlink",
-        success: function (response) {
-          console.log(response);
-          alert("로그아웃 성공");
-          store.dispatch("kakao/logoutKKO");
-          router.push({ name: "Home" });
-        },
-        fail: function (error) {
-          console.log(error);
-        },
+      window.Kakao.Auth.logout((response) => {
+        //로그아웃
+        // console.log("access token:", window.Kakao.Auth.getAccessToken());
+        console.log("log out:", response);
+        alert("로그아웃 성공!");
+        store.dispatch("kakao/logOutKKO");
+        // 쿠키 삭제하는 기능
+        cookeDelete();
+
+        router.push({
+          name: "Home",
+        });
       });
-      // window.Kakao.Auth.logout((response) => {
-      //   //로그아웃
-      //   // console.log("access token:", window.Kakao.Auth.getAccessToken());
-      //   console.log("log out:", response);
-      //   alert("로그아웃 성공!");
-      //   store.dispatch("kakao/logOutKKO");
-      //   router.push({
-      //     name: "Home",
-      //   });
-      // });
     };
     const email = computed(() => store.getters["kakao/getEmail"]);
     const profile = computed(() => store.getters["kakao/getProfile"]);

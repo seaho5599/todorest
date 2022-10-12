@@ -64,6 +64,8 @@ import axios from "@/api/axios";
 import _ from "lodash";
 import InputView from "@/components/InputView.vue";
 import { useToast } from "@/composables/toast";
+// import { db } from "@/firebase";
+// import { collection, getDocs } from "firebase/firestore";
 export default {
   components: {
     InputView,
@@ -75,6 +77,21 @@ export default {
     },
   },
   setup(props) {
+    // onMounted(async () => {
+    //   const querySnapshot = await getDocs(collection(db, "todorest"));
+    //   let fbtodos = [];
+    //   querySnapshot.forEach((doc) => {
+    //     console.log(doc.id, " => ", doc.data());
+    //     const todos = ref({
+    //       id: doc.id,
+    //       subject: doc.data().subject,
+    //       complete: doc.data().complete,
+    //       body: doc.data().body,
+    //     });
+    //     fbtodos.push(todos);
+    //   });
+    //   todo.value = fbtodos;
+    // });
     // toast 기능 관련
     const { triggerToast } = useToast();
 

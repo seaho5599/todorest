@@ -8,6 +8,7 @@ import TodoCreate from "../views/TodoCreate.vue";
 import Kakao from "../views/KakaoLogin.vue";
 import LoginView from "../components/LoginView.vue";
 import SignUp from "../components/SignUp.vue";
+import Logout from "../components/LogoutView.vue";
 const routes = [
   {
     path: "/",
@@ -15,7 +16,7 @@ const routes = [
     component: HomeIndex,
   },
   {
-    path: "/todos",
+    path: "/",
     name: "Todos",
     component: TodosIndex,
   },
@@ -53,6 +54,11 @@ const routes = [
     path: "/signup",
     name: "SignUp",
     component: SignUp,
+  },
+  {
+    path: "/logout",
+    name: "Logout",
+    component: Logout,
   },
 ];
 

@@ -1,85 +1,115 @@
 <template>
-  <div class="container sign-up">
-    <p>회원가입</p>
-    <input type="text" v-model="email" placeholder="email" /><br />
-    <input type="password" v-model="password" placeholder="password" /><br />
-    <button @click="signUp">가입하기</button>
-    <span>또는 로그인으로 돌아가기</span>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">회원가입</div>
+          <div class="card-body">
+            <div v-if="error" class="alert alert-danger">{{ error }}</div>
+            <form action="#" @submit.prevent="Register">
+              <div class="form-group row">
+                <label for="name" class="col-md-4 col-form-label text-md-right"
+                  >Name</label
+                >
+
+                <div class="col-md-6">
+                  <input
+                    id="name"
+                    type="name"
+                    class="form-control"
+                    name="name"
+                    value
+                    required
+                    autofocus
+                    v-model="name"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="email" class="col-md-4 col-form-label text-md-right"
+                  >Email</label
+                >
+
+                <div class="col-md-6">
+                  <input
+                    id="email"
+                    type="email"
+                    class="form-control"
+                    name="email"
+                    value
+                    required
+                    autofocus
+                    v-model="email"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label
+                  for="password"
+                  class="col-md-4 col-form-label text-md-right"
+                  >Password</label
+                >
+
+                <div class="col-md-6">
+                  <input
+                    id="password"
+                    type="password"
+                    class="form-control"
+                    name="password"
+                    required
+                    v-model="password"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group row mb-0">
+                <div
+                  class="container col-md-8 offset d-flex justify-content-center"
+                >
+                  <button type="submit" class="btn btn-primary">
+                    회원가입
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { ref } from "vue";
+import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 export default {
   setup() {
+    const name = ref("");
     const email = ref("");
     const password = ref("");
-    const auth = getAuth();
+    const error = ref(null);
+
+    const store = useStore();
     const router = useRouter();
-    const errMsg = ref();
-    const signUp = () => {
-      signInWithEmailAndPassword(auth, email.value, password.value)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log("🚀 ~ file: SignUp.vue ~ line 27 ~ .then ~ user", user);
-          router.push("/");
-          // ...
-        })
-        .catch((error) => {
-          switch (error.code) {
-            case "auth/invalid-email":
-              errMsg.value = "이메일을 잘못 입력 하셨습니다.";
-              break;
-            case "auth/user-not-found":
-              errMsg.value = "존재하지 않는 이메일 주소입니다.";
-              break;
-            case "auth/wrong-password":
-              errMsg.value = "비밀번호를 잘못 입력 하셨습니다.";
-              break;
-            case "auth/too-many-requests":
-              errMsg.value = "접속 시도를 너무 많이 하셨습니다.";
-              break;
-            default:
-              errMsg.value = "이메일 혹은 비밀번호가 틀렸습니다.";
-              break;
-          }
-          alert(errMsg.value);
-          console.log(error.code);
+
+    const Register = async () => {
+      try {
+        await store.dispatch("login/register", {
+          email: email.value,
+          password: password.value,
+          name: name.value,
         });
+        router.push("/loginview");
+      } catch (err) {
+        error.value = err.message;
+      }
     };
-    return {
-      email,
-      password,
-      signUp,
-    };
+
+    return { Register, name, email, password, error };
   },
 };
 </script>
-
-<style scoped>
-.signUp {
-  margin-top: 40px;
-}
-input {
-  margin: 10px 0;
-  width: 20%;
-  padding: 15px;
-}
-button {
-  margin-top: 20px;
-  width: 10%;
-  cursor: pointer;
-}
-p {
-  margin-top: 40px;
-  font-size: 20px;
-}
-span {
-  display: block;
-  margin-top: 20px;
-  font-size: 15px;
-}
-</style>

@@ -1,54 +1,93 @@
 <template>
-  <div class="container login">
-    <h3>Login</h3>
-    <input type="text" placeholder="email" /><br />
-    <input type="password" placeholder="password" /><br />
-    <button>로그인</button>
-    <p>
-      만약 계정이 없다면,
-      <a class="nav-link" @click="goSignUp" style="cursor: pointer">회원가입</a>
-      을 먼저 진행해주세요!
-    </p>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">로그인</div>
+          <div class="card-body">
+            <div v-if="error" class="alert alert-danger">{{ error }}</div>
+            <form action="#" @submit.prevent="Login">
+              <div class="form-group row">
+                <label for="email" class="col-md-4 col-form-label text-md-right"
+                  >Email</label
+                >
+
+                <div class="col-md-6">
+                  <input
+                    id="email"
+                    type="email"
+                    class="form-control"
+                    name="email"
+                    value
+                    required
+                    autofocus
+                    v-model="email"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label
+                  for="password"
+                  class="col-md-4 col-form-label text-md-right"
+                  >Password</label
+                >
+
+                <div class="col-md-6">
+                  <input
+                    id="password"
+                    type="password"
+                    class="form-control"
+                    name="password"
+                    required
+                    v-model="password"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group row mb-0">
+                <div
+                  class="container col-md-8 offset d-flex justify-content-center"
+                >
+                  <button type="submit" class="btn btn-primary">로그인</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { ref, computed } from "vue";
+import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+
 export default {
   setup() {
     const router = useRouter();
-    const goSignUp = () => {
-      router.push({
-        name: "SignUp",
-      });
+    const store = useStore();
+    const email = ref("");
+    const password = ref("");
+    const error = ref(null);
+    const loginState = computed(() => store.getters["login/getLoginState"]);
+    const Login = async () => {
+      try {
+        await store.dispatch("login/logIn", {
+          email: email.value,
+          password: password.value,
+        });
+        console.log(loginState.value);
+        router.push({
+          name: "Todos",
+        });
+      } catch (err) {
+        error.value = "다시 입력해주세요.";
+      }
     };
-    return {
-      goSignUp,
-    };
+    return { Login, email, password, error };
   },
 };
 </script>
-
-<style scoped>
-.login {
-  margin-top: 40px;
-}
-input {
-  margin: 10px 0;
-  width: 20%;
-  padding: 15px;
-}
-button {
-  margin-top: 20px;
-  width: 10%;
-  cursor: pointer;
-}
-p {
-  margin-top: 40px;
-  font-size: 15px;
-}
-p a {
-  text-decoration: underline;
-  cursor: pointer;
-}
-</style>
